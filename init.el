@@ -39,6 +39,18 @@
   (bind-key* "C-x M-g" 'magit-dispatch-popup))
 (use-package bind-key
   :config
+  (bind-key* "M-l" 'forward-char)
+  (bind-key* "M-h" 'backward-char)
+  (bind-key* "M-k" 'previous-line)
+  (bind-key* "M-j" 'next-line)
+  (bind-key* "C-M-j" 'move-end-of-line)
+  (bind-key* "C-M-k" 'move-beginning-of-line)
+  (bind-key* "C-M-h" 'backward-word)
+  (bind-key* "C-M-l" 'forward-word)
+  (bind-key* "M-n" 'scroll-up-line)
+  (bind-key* "M-p" 'scroll-down-line)
+  (bind-key* "C-M-n" 'scroll-up)
+  (bind-key* "C-M-p" 'scroll-down)
   (bind-key* "C-c o i" 'bc-open-emacs-init)
   (bind-key* "C-c o j" 'bc-open-journal)
   (bind-key* "C-c o c" 'bc-open-c2)
@@ -48,12 +60,15 @@
   (bind-key* "C-c s g" 'grep)
   (bind-key* "C-c s t" 'vc-git-grep)
   (bind-key* "C-<tab>" 'ido-switch-buffer)
-  (bind-key* "C-S-o" (lambda ()
+  (bind-key* "C-<iso-lefttab>" (lambda ()
                      (interactive)
                      (other-window -1)))
+  (bind-key* "C-<tab>" 'other-window)
+  (bind-key* "C-`" 'bc-next-buffer)
+  (bind-key* "C-~" 'bc-prev-buffer)
   (bind-key* "C-o" 'other-window)
-  (bind-key* "C-<tab>" 'bc-next-buffer)
-  (bind-key* "C-<iso-lefttab>" 'bc-prev-buffer))
+  (bind-key* "C-S-o" '(lambda () (interactive) (other-window -1)))
+  (bind-key "<tab>" 'ido-next-match minibuffer-inactive-mode-map))
 
 (use-package avy
   :config
@@ -274,3 +289,4 @@
 (defun my-c++-mode-hook ()
   (c-set-offset 'inline-mode 0)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(setq confirm-kill-emacs 'y-or-n-p)
