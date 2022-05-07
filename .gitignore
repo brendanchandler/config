@@ -1,0 +1,15 @@
+.emacs.desktop
+anaconda-mode/*
+auto-save-list/*
+bookmarks
+elpa/
+eshell/
+ido.last
+projects
+semanticdb/*
+session.*
+timelog
+tramp
+games/
+*~
+projectile-bookmarks.eld
