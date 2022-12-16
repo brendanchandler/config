@@ -1,7 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -34,25 +30,35 @@ YELLOW="\[\033[0;33m\]"
 # WHITE="\[\033[0;37m\]"
 # WHITEBOLD="\[\033[1;37m\]"
 RESET="\[\033[00m\]"
-AUTOSARDIR="matlab/toolbox/rtw/targets/AUTOSAR/AUTOSAR"
-AUTOSARTESTDIR="matlab/test/toolbox/rtw/targets/AUTOSAR/"
 
 colorfularrows="$GREEN>$YELLOW>$GREEN>$YELLOW>$RESET"
 
-PATH=/usr/local/go/bin:$PATH
-PATH=$HOME/src/sh/:$PATH
-PATH=$HOME/src/go/bin:$PATH
-PATH=$HOME/.local/bin/:$PATH
-PATH=$HOME/local/bin:$PATH
-PATH=$HOME/bin:$PATH
-#PATH=$HOME/Qt/Tools/QtCreator/bin:$PATH
-PATH=$LOCALHOME/Qt/Tools/QtCreator/bin:$PATH
-export PATH
+function timer_start
+{
+    timer=${timer:-$SECONDS}
+}
 
-export GOHOME=~/Dropbox/bren/src/go/
-export RECOLL_CONFDIR=$LOCALHOME/.recoll/
-export PS1="$colorfularrows \u@\h [\t](\$?) \w\n\$ "
-export EDITOR='emacs'
+function timer_stop
+{
+    timer_show=$(($SECONDS - $timer))
+    unset timer
+}
+
+trap 'timer_start' DEBUG
+
+if [ "$PROMPT_COMMAND" == "" ]; then
+    PROMPT_COMMAND="timer_stop"
+else
+    PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
+fi
+
+export PS1="${colorfularrows} \u@\h [\${timer_show}s](\$?) \w\n\$ "
+#export PS1="$colorfularrows \u@\h [\t](\$?) \w\n\$ "
+
+export EDITOR='vim'
+export VISUAL='gvim --nofork'
+export GIT_EDITOR="vim"
+export TERM=xterm-256color
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -63,13 +69,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+alias gvim_diff='gvimdiff'
 alias less='less -R'
-alias e='emacsclient -t'
-alias ec='emacsclient -c'
+alias gdb='EDITOR=gvimr gdb'
+alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
+alias e='emacsclient -n'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+export s=~/src/
+export l=/local/bchandler/
+export c=~/C2/iocs/
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -77,4 +85,43 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+
+#export EPICS_BASE=${HOME}/src/epics-base
+#export EPICS_HOST_ARCH=$(${EPICS_BASE}/startup/EpicsHostArch)
+#export PATH=${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:${PATH}
+#export PATH=/C2/conda/linux-x86_64/bin:$PATH
+#export PATH=/C2/conda/linux-x86_64/envs/gui/bin:$PATH
+#PATH="$HOME/.cargo/bin:$PATH"
+#PATH=/usr/local/go/bin:$PATH
+#PATH=$HOME/src/sh/:$PATH
+PATH=$HOME/bin/:$PATH
+export PATH=$HOME/.local/bin:$PATH
+#PATH=$HOME/src/epics-base/bin/linux-x86_64/:$PATH
+#export PATH=/C2/conda/linux-x86_64/envs/ioc/bin:$PATH
+export PATH
+
+#export SUMOCONFIG=/C2/ioc-modules
+
+export GOPATH=~/src/go
+
+if [ -n "$DISPLAY" ]; then
+    xset b off
+fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/C2/conda/linux-x86_64/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/C2/conda/linux-x86_64/etc/profile.d/conda.sh" ]; then
+        . "/C2/conda/linux-x86_64/etc/profile.d/conda.sh"
+    else
+        export PATH="/C2/conda/linux-x86_64/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 

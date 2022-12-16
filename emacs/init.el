@@ -61,6 +61,8 @@
   ("C-c j j" . avy-goto-char-timer)
   ("C-c j l" . avy-goto-line))
 
+(use-package company)
+
 (use-package markdown-mode)
 
 (use-package which-key
@@ -76,7 +78,22 @@
   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
   (setq projectile-project-search-path '("~/src/"
 					 "~/C2/iocs/"
-					 "~/C2/devel/")))
+					 "~/C2/devel/"))
+  :bind
+  ("C-c p f" . projectile-find-file)
+  ("C-c p p" . projectile-switch-project)
+  ("C-c p s" . projectile-grep)
+  ("C-c p c" . projectile-compile-project)
+  ("C-c p d" . projectile-dired)
+  ("C-c p i" . projectile-project-info))
+
+(use-package yasnippet
+  :config
+  (setq yas-snippet-dirs
+	'("/home/phoebus/BCHANDLER/.config/emacs/elpa/yasnippet-snippets-20220713.1234/snippets"
+	  "~/.config/emacs/snippets"))
+  (yas-global-mode 1))
+
 (use-package vertico
   :init
   (vertico-mode))
@@ -141,6 +158,9 @@
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (dired-hide-details-mode)))
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+(add-hook 'python-mode-hook 'lsp)
 
 (defun bc/term-toggle-mode ()
   "Toggles term between line mode and char mode"
@@ -158,14 +178,24 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(avy-all-windows nil)
+ '(backup-directory-alist '((".*" . "~/emacs-backup")))
+ '(c-default-style
+   '((c-mode . "linux")
+     (c++-mode . "stroustrup")
+     (java-mode . "java")
+     (awk-mode . "awk")
+     (other . "gnu")))
  '(custom-enabled-themes '(leuven))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(global-linum-mode t)
+ '(gmm-tool-bar-style 'gnome)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(mermaid-mode which-key vertico use-package projectile orderless markdown-mode magit god-mode evil avy))
+   '(company lsp-mode lsp-treemacs yasnippet yasnippet-snippets flycheck which-key vertico use-package projectile orderless markdown-mode magit evil avy))
  '(projectile-project-root-functions
    '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
+ '(python-fill-docstring-style 'pep-257)
+ '(show-paren-style 'parenthesis)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
