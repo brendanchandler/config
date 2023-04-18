@@ -11,57 +11,68 @@
   ;; (add-to-list 'load-path "~/.config/emacs/lisp/")
   (require 'use-package))
 
-(defun toggle-current-window-dedication ()
-  (interactive)
-  (let* ((window    (selected-window))
-         (dedicated (window-dedicated-p window)))
-    (set-window-dedicated-p window (not dedicated))
-    (message "Window %sdedicated to %s"
-             (if dedicated "no longer " "")
-             (buffer-name))))
 
 (define-prefix-command 'filesystem-map)
-(define-key global-map (kbd "C-c f") filesystem-map)
+(define-key global-map (kbd "C-c C-f") filesystem-map)
 
 (define-prefix-command 'search-map)
-(define-key global-map (kbd "C-c j") search-map)
+(define-key global-map (kbd "C-c C-j") search-map)
+
+(define-prefix-command 'o-map)
+(define-key global-map (kbd "C-o") o-map)
+
+(setq tr--last-command nil)
+
+(defun tr (command)
+  "Run the specified command in the currently active tmux pane"
+  (interactive "sCommand: ")
+  (setq tr--last-command command)
+  (call-process "tmux" nil nil nil "send-keys" command "Enter"))
+
+(defun trr ()
+  "Re-run the previous command"
+  (interactive)
+  (if tr--last-command
+      (call-process "tmux" nil nil nil "send-keys" tr--last-command "Enter")
+    (message "No available previous command!")))
+
 
 (use-package emacs
-  :bind
-  ("C-j" . avy-goto-char)
-  ("C-c j j" . avy-goto-char)
-  ("C-o" . other-window)
-  ("C-c f s" . save-buffer)
-  ("C-c f g" . rgrep)
-  ("C-c f f" . find-file)
-  ("C-c f d" . dired)
-  ("C-c f i" . (lambda () (interactive)
-		 (find-file user-init-file)))
-  ("C-c r i" . (lambda () (interactive)
-		 (load-file user-init-file)))
-  ("C-c m e" . hippie-expand)
-  ("C-c j l" . avy-goto-line)
-  ("C-c j i" . imenu)
-  ("C-c b b" . switch-to-buffer)
-  ("C-c p f" . projectile-find-file)
-  ("C-c p p" . projectile-switch-project)
-  ("C-c p s" . projectile-grep)
-  ("C-c p c" . projectile-compile-project)
-  ("C-c p d" . projectile-dired)
-  ("C-c x i" . (lambda () (interactive)
-		 (load-file user-init-file)))
-  ("C-c c a" . toggle-current-window-dedication)
+  :bind (("C-c f s" . save-buffer)
+	 ("C-c f g" . rgrep)
+	 ("C-c f f" . find-file)
+	 ("C-c f d" . dired)
+	 ("C-c f i" . (lambda () (interactive)
+			(find-file user-init-file)))
+	 ("C-c c f r" . (lambda () (interactive)
+			  (load-file user-init-file)))
+	 ("C-o e" . hippie-expand)
+	 ("C-c s" . imenu)
+	 ("C-c j b" . switch-to-buffer))  
   :config
-  (windmove-default-keybindings 'control)
+  (windmove-default-keybindings)
+  (global-unset-key (kbd "C-z"))
+  
+  (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+  (defun my-goto-match-beginning ()
+    (when (and isearch-forward isearch-other-end)
+      (goto-char isearch-other-end)))
+
+  (defadvice isearch-exit (after my-goto-match-beginning activate)
+    "Go to beginning of match."
+    (when (and isearch-forward isearch-other-end)
+      (goto-char isearch-other-end)))
+
 )
 
 (use-package avy
-:bind
-("C-;" . avy-goto-char-timer)
-  ("C-c j j" . avy-goto-char-timer)
-  ("C-c j l" . avy-goto-line))
+  :bind ("C-o j" . avy-goto-char))
 
-(use-package company)
+(use-package linum
+  :hook (prog-mode . linum-mode))
+
+(use-package company
+  :hook (prog-mode . company-mode))
 
 (use-package markdown-mode)
 
@@ -76,23 +87,11 @@
   (projectile-mode +1)
   :config
   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-  (setq projectile-project-search-path '("~/src/"
-					 "~/C2/iocs/"
-					 "~/C2/devel/"))
-  :bind
-  ("C-c p f" . projectile-find-file)
-  ("C-c p p" . projectile-switch-project)
-  ("C-c p s" . projectile-grep)
-  ("C-c p c" . projectile-compile-project)
-  ("C-c p d" . projectile-dired)
-  ("C-c p i" . projectile-project-info))
-
-(use-package yasnippet
-  :config
-  (setq yas-snippet-dirs
-	'("/home/phoebus/BCHANDLER/.config/emacs/elpa/yasnippet-snippets-20220713.1234/snippets"
-	  "~/.config/emacs/snippets"))
-  (yas-global-mode 1))
+  (setq projectile-project-search-path '("/home/phoebus3/BCHANDLER/src"
+					 "/home/phoebus3/BCHANDLER/src/test/"
+					 "/home/phoebus3/BCHANDLER/C2/iocs"
+					 "/home/phoebus3/BCHANDLER/C2/dev-support/build/AXE/"
+					 "/home/phoebus3/BCHANDLER/C2/devel")))
 
 (use-package vertico
   :init
@@ -108,6 +107,7 @@
 	completion-category-overrides '((file (styles partial-completion)))))
   
 (use-package cc-mode)
+
 
 (defun bc-next-buffer ()
   (interactive)
@@ -155,12 +155,56 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
+(defun bc-increment-number-decimal (&optional arg)
+  "Increment the number forward from point by 'arg'."
+  (interactive "p*")
+  (save-excursion
+    (save-match-data
+      (let (inc-by field-width answer)
+        (setq inc-by (if arg arg 1))
+        (skip-chars-backward "0123456789")
+        (when (re-search-forward "[0-9]+" nil t)
+          (setq field-width (- (match-end 0) (match-beginning 0)))
+          (setq answer (+ (string-to-number (match-string 0) 10) inc-by))
+          (when (< answer 0)
+            (setq answer (+ (expt 10 field-width) answer)))
+          (replace-match (format (concat "%0" (int-to-string field-width) "d")
+                                 answer)))))))
+
+(defun bc-decrement-number-decimal (&optional arg)
+  (interactive "p*")
+  (my-increment-number-decimal (if arg (- arg) -1)))
+
+
+(defun toggle-current-window-dedication ()
+  (interactive)
+  (let* ((window    (selected-window))
+         (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+             (if dedicated "no longer " "")
+             (buffer-name))))
+
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (dired-hide-details-mode)))
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
-(add-hook 'python-mode-hook 'lsp)
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (c++-mode . lsp)
+	 (c-mode . lsp)
+	 (python-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+
+;; (add-hook 'c-mode-hook 'lsp)
+;; (add-hook 'c++-mode-hook 'lsp)
+;; (add-hook 'python-mode-hook 'lsp)
 
 (defun bc/term-toggle-mode ()
   "Toggles term between line mode and char mode"
@@ -168,8 +212,6 @@
   (if (term-in-line-mode)
       (term-char-mode)
     (term-line-mode)))
-
-
 
 
 (custom-set-variables
@@ -185,18 +227,18 @@
      (java-mode . "java")
      (awk-mode . "awk")
      (other . "gnu")))
- '(custom-enabled-themes '(leuven))
+ '(custom-enabled-themes '(modus-vivendi))
  '(dired-dwim-target 'dired-dwim-target-next)
- '(global-linum-mode t)
  '(gmm-tool-bar-style 'gnome)
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(company lsp-mode lsp-treemacs yasnippet yasnippet-snippets flycheck which-key vertico use-package projectile orderless markdown-mode magit evil avy))
+   '(meow company lsp-mode lsp-treemacs flycheck which-key vertico use-package projectile orderless markdown-mode magit evil avy))
  '(projectile-project-root-functions
    '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
  '(python-fill-docstring-style 'pep-257)
  '(show-paren-style 'parenthesis)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
