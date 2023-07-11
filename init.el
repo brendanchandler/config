@@ -1,1 +1,1 @@
-/home/phoebus/BCHANDLER/src/bren-config/init.el
+/home/phoebus/BCHANDLER/src/config/emacs/init.el
