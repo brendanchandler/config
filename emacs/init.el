@@ -36,19 +36,44 @@
       (call-process "tmux" nil nil nil "send-keys" tr--last-command "Enter")
     (message "No available previous command!")))
 
+(use-package org
+  :bind
+  ("M-h" . windmove-left)
+  :config
+  (with-eval-after-load "org"
+    (define-key org-mode-map (kbd "M-h") #'windmove-left)))
 
 (use-package emacs
+  :ensure t
   :bind (("C-c f s" . save-buffer)
 	 ("C-c f g" . rgrep)
 	 ("C-c f f" . find-file)
 	 ("C-c f d" . dired)
+	 ("C-c f t" . (lambda () (interactive)
+			(find-file "/ssh:bchandler@tesseract:/home/phoebus/BCHANDLER/")))
+	 ("C-c f w" . (lambda () (interactive)
+			(find-file "/ssh:bchandler@weed:/home/bchandler/")))
+	 ("C-c f h" . (lambda () (interactive)
+			(find-file "/ssh:bchandler@voltctl:/home/helios/BCHANDLER/")))
 	 ("C-c f i" . (lambda () (interactive)
 			(find-file user-init-file)))
 	 ("C-c c f r" . (lambda () (interactive)
 			  (load-file user-init-file)))
 	 ("C-o e" . hippie-expand)
-	 ("C-c s" . imenu)
-	 ("C-c j b" . switch-to-buffer))  
+	 ("M-i" . imenu)
+	 ("M-h" . windmove-left)
+	 ("M-l" . windmove-right)
+	 ("M-j" . windmove-down)
+	 ("M-k" . windmove-up)
+	 ("C-c j b" . switch-to-buffer)
+	 ("C-c m" . (lambda () (interactive)
+		      (occur "# section:")))
+	 ("M-e" . forward-to-word)
+	 ("C-x C-b" . ibuffer)
+	 ("M-n" . move-line-down)
+	 ("M-p" . move-line-up)
+	 ("C-c w" . bc/vertical-windows)
+	 )
   :config
   (windmove-default-keybindings)
   (global-unset-key (kbd "C-z"))
@@ -63,41 +88,40 @@
     (when (and isearch-forward isearch-other-end)
       (goto-char isearch-other-end)))
 
-)
+  )
+
+;; (use-package clipetty--dcs-end
+;;   :ensure t
+;;   :config
+;;   (clipetty-mode))
+
 
 (use-package avy
-  :bind ("C-o j" . avy-goto-char))
-
-(use-package linum
-  :hook (prog-mode . linum-mode))
+  :ensure t
+  :bind ("M-o" . avy-goto-char))
 
 (use-package company
+  :ensure t
   :hook (prog-mode . company-mode))
 
-(use-package markdown-mode)
+(use-package markdown-mode
+  :ensure t)
 
 (use-package which-key
+  :ensure t
   :init
   (which-key-mode t))
 
-(use-package magit)
-
-(use-package projectile
-  :init
-  (projectile-mode +1)
-  :config
-  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-  (setq projectile-project-search-path '("/home/phoebus3/BCHANDLER/src"
-					 "/home/phoebus3/BCHANDLER/src/test/"
-					 "/home/phoebus3/BCHANDLER/C2/iocs"
-					 "/home/phoebus3/BCHANDLER/C2/dev-support/build/AXE/"
-					 "/home/phoebus3/BCHANDLER/C2/devel")))
+(use-package magit
+  :ensure t)
 
 (use-package vertico
+  :ensure t
   :init
   (vertico-mode))
 
 (use-package orderless
+  :ensure t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -106,7 +130,8 @@
 	completion-category-defaults nil
 	completion-category-overrides '((file (styles partial-completion)))))
   
-(use-package cc-mode)
+(use-package cc-mode
+  :ensure t)
 
 
 (defun bc-next-buffer ()
@@ -185,26 +210,36 @@
              (if dedicated "no longer " "")
              (buffer-name))))
 
+(defun move-line-up ()
+  "Move up the current line."
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (dired-hide-details-mode)))
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c++-mode . lsp)
-	 (c-mode . lsp)
-	 (python-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+;; (use-package eglot-mode
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (c++-mode . eglot)
+;; 	 (c-mode . eglot)
+;; 	 (python-mode . eglot)))
 
 
-;; (add-hook 'c-mode-hook 'lsp)
-;; (add-hook 'c++-mode-hook 'lsp)
-;; (add-hook 'python-mode-hook 'lsp)
+(add-hook 'c-mode-hook 'eglot)
+(add-hook 'c++-mode-hook 'eglot)
+(add-hook 'python-mode-hook 'eglot)
 
 (defun bc/term-toggle-mode ()
   "Toggles term between line mode and char mode"
@@ -213,6 +248,13 @@
       (term-char-mode)
     (term-line-mode)))
 
+(defun bc/vertical-windows ()
+  "Sets up 3 vertical, balanced windows"
+  (interactive)
+  (progn (delete-other-windows)
+       (split-window-right)
+       (split-window-right)
+       (balance-windows)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -221,18 +263,15 @@
  ;; If there is more than one, they won't work right.
  '(avy-all-windows nil)
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
- '(c-default-style
-   '((c-mode . "linux")
-     (c++-mode . "stroustrup")
-     (java-mode . "java")
-     (awk-mode . "awk")
-     (other . "gnu")))
- '(custom-enabled-themes '(modus-vivendi))
+ '(c-default-style "stroustrup")
+ '(custom-enabled-themes '(leuven))
  '(dired-dwim-target 'dired-dwim-target-next)
- '(gmm-tool-bar-style 'gnome)
+ '(display-line-numbers t)
+ '(gmm-tool-bar-style 'gnome t)
  '(inhibit-startup-screen t)
+ '(line-move-visual nil)
  '(package-selected-packages
-   '(meow company lsp-mode lsp-treemacs flycheck which-key vertico use-package projectile orderless markdown-mode magit evil avy))
+   '(clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
  '(projectile-project-root-functions
    '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
  '(python-fill-docstring-style 'pep-257)
@@ -244,4 +283,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 90 :width normal)))))
+(put 'erase-buffer 'disabled nil)
