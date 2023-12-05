@@ -45,11 +45,7 @@
 
 (use-package emacs
   :ensure t
-  :bind (("C-c f s" . save-buffer)
-	 ("C-c f g" . rgrep)
-	 ("C-c f f" . find-file)
-	 ("C-c f d" . dired)
-	 ("C-c f t" . (lambda () (interactive)
+  :bind (("C-c f t" . (lambda () (interactive)
 			(find-file "/ssh:bchandler@tesseract:/home/phoebus/BCHANDLER/")))
 	 ("C-c f w" . (lambda () (interactive)
 			(find-file "/ssh:bchandler@weed:/home/bchandler/")))
@@ -65,7 +61,7 @@
 	 ("M-l" . windmove-right)
 	 ("M-j" . windmove-down)
 	 ("M-k" . windmove-up)
-	 ("C-c j b" . switch-to-buffer)
+	 ("C-x C-o" . tab-next)
 	 ("C-c m" . (lambda () (interactive)
 		      (occur "# section:")))
 	 ("M-e" . forward-to-word)
@@ -75,6 +71,7 @@
 	 ("C-c w" . bc/vertical-windows)
 	 )
   :config
+  (context-menu-mode)
   (windmove-default-keybindings)
   (global-unset-key (kbd "C-z"))
   
@@ -87,8 +84,8 @@
     "Go to beginning of match."
     (when (and isearch-forward isearch-other-end)
       (goto-char isearch-other-end)))
-
   )
+
 
 ;; (use-package clipetty--dcs-end
 ;;   :ensure t
@@ -152,24 +149,6 @@
   "Open EMACS init.el."
   (interactive)
   (find-file "~/.config/emacs/init.el"))
-(defun bc-open-src ()
-  "Open ~/src dir."
-  (interactive)
-  (dired "~/src"))
-(defun bc-open-c2 ()
-  "Open ~/C2/iocs/."
-  (interactive)
-  (dired "~/C2/iocs/"))
-(defun bc-open-local-dir ()
-  "Open /local/bchandler/."
-  (interactive)
-  (dired "/local/bchandler/"))
-(defun bc-duplicate-window ()
-  "Close all other frames and duplicate the current one."
-  (interactive)
-  (delete-other-windows)
-  (split-window-right)
-  (other-window 1))
 (defun bc-copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -230,6 +209,21 @@
 	  (lambda ()
 	    (dired-hide-details-mode)))
 
+(use-package lsp-mode
+  :ensure t
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (cc-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally if you want to use debugger
+;; (use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
 ;; (use-package eglot-mode
 ;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
 ;;          (c++-mode . eglot)
@@ -237,9 +231,9 @@
 ;; 	 (python-mode . eglot)))
 
 
-(add-hook 'c-mode-hook 'eglot)
-(add-hook 'c++-mode-hook 'eglot)
-(add-hook 'python-mode-hook 'eglot)
+;;(add-hook 'c-mode-hook 'eglot)
+;;(add-hook 'c++-mode-hook 'eglot)
+;;(add-hook 'python-mode-hook 'eglot)
 
 (defun bc/term-toggle-mode ()
   "Toggles term between line mode and char mode"
@@ -264,14 +258,18 @@
  '(avy-all-windows nil)
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
  '(c-default-style "stroustrup")
+ '(cursor-type t)
  '(custom-enabled-themes '(leuven))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
  '(gmm-tool-bar-style 'gnome t)
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
+ '(org-agenda-files '("~/private/todo.org"))
+ '(org-todo-keywords
+   '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
  '(projectile-project-root-functions
    '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
  '(python-fill-docstring-style 'pep-257)
@@ -285,3 +283,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 90 :width normal)))))
 (put 'erase-buffer 'disabled nil)
+
+  (defun bc/insert-current-date () (interactive)
+    (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
