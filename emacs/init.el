@@ -36,6 +36,12 @@
       (call-process "tmux" nil nil nil "send-keys" tr--last-command "Enter")
     (message "No available previous command!")))
 
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 (use-package org
   :bind
   ("M-h" . windmove-left)
@@ -219,6 +225,12 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
+
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode))
+
 
 ;; optionally if you want to use debugger
 ;; (use-package dap-mode)
