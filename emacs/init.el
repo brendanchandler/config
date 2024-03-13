@@ -108,7 +108,9 @@
   :hook (prog-mode . company-mode))
 
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package which-key
   :ensure t
@@ -136,6 +138,16 @@
 (use-package cc-mode
   :ensure t)
 
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-disable-insert-state-bindings t)
+  :config
+  (evil-set-initial-state 'help-mode 'emacs)
+  (evil-set-initial-state 'compilation-mode 'emacs)
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'magit-mode 'emacs)
+  (evil-mode))
 
 (defun bc-next-buffer ()
   (interactive)
@@ -271,20 +283,25 @@
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
  '(c-default-style "stroustrup")
  '(cursor-type t)
- '(custom-enabled-themes '(leuven))
+ '(custom-enabled-themes '(modus-vivendi))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
+ '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
+ '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
  '(org-agenda-files '("~/private/todo.org"))
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
  '(projectile-project-root-functions
    '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
  '(python-fill-docstring-style 'pep-257)
+ '(python-indent-def-block-scale 4)
+ '(python-indent-guess-indent-offset nil)
+ '(python-indent-guess-indent-offset-verbose nil)
  '(show-paren-style 'parenthesis)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
@@ -298,3 +315,5 @@
 
   (defun bc/insert-current-date () (interactive)
     (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
+(put 'narrow-to-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
