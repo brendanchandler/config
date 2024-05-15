@@ -13,3 +13,6 @@ tramp
 games/
 *~
 projectile-bookmarks.eld
+*.el#
+/.cache/
+/.gdb_history
