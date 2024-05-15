@@ -289,6 +289,7 @@
  '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
  '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
  '(org-agenda-files '("~/private/todo.org"))
@@ -296,13 +297,12 @@
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
    '(god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
- '(projectile-project-root-functions
-   '(projectile-root-local projectile-root-top-down-recurring projectile-root-bottom-up projectile-root-top-down))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
  '(python-indent-guess-indent-offset-verbose nil)
  '(show-paren-style 'parenthesis)
+ '(tab-width 4)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 (custom-set-faces
