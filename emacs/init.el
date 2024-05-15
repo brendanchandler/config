@@ -283,7 +283,7 @@
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
  '(c-default-style "stroustrup")
  '(cursor-type t)
- '(custom-enabled-themes '(modus-vivendi))
+ '(custom-enabled-themes '(modus-operandi))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
  '(evil-default-state 'insert)
@@ -317,3 +317,8 @@
     (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c o") 'ff-find-other-file)))
+
