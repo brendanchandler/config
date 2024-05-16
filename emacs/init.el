@@ -322,3 +322,6 @@
 	  (lambda ()
 	    (local-set-key (kbd "C-c o") 'ff-find-other-file)))
 
+;; Treat underscores as part of a word, not a word separator.
+;; Lets evil * and other movement keys work as expected
+(modify-syntax-entry ?_ "w")
