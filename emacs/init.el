@@ -1,11 +1,4 @@
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
-
-;; This is only needed once, near the top of the file
+; This is only needed once, near the top of the file
 (eval-when-compile
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
   ;; (add-to-list 'load-path "~/.config/emacs/lisp/")
@@ -20,34 +13,6 @@
 
 (define-prefix-command 'o-map)
 (define-key global-map (kbd "C-o") o-map)
-
-(setq tr--last-command nil)
-
-(defun tr (command)
-  "Run the specified command in the currently active tmux pane"
-  (interactive "sCommand: ")
-  (setq tr--last-command command)
-  (call-process "tmux" nil nil nil "send-keys" command "Enter"))
-
-(defun trr ()
-  "Re-run the previous command"
-  (interactive)
-  (if tr--last-command
-      (call-process "tmux" nil nil nil "send-keys" tr--last-command "Enter")
-    (message "No available previous command!")))
-
-(use-package benchmark-init
-  :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
-(use-package org
-  :bind
-  ("M-h" . windmove-left)
-  :config
-  (with-eval-after-load "org"
-    (define-key org-mode-map (kbd "M-h") #'windmove-left)))
 
 (use-package emacs
   :ensure t
@@ -69,7 +34,7 @@
 	 ("M-k" . windmove-up)
 	 ("C-x C-o" . tab-next)
 	 ("C-c m" . (lambda () (interactive)
-		      (occur "# section:")))
+		      (occur "Section:")))
 	 ("M-e" . forward-to-word)
 	 ("C-x C-b" . ibuffer)
 	 ("M-n" . move-line-down)
@@ -98,6 +63,31 @@
 ;;   :config
 ;;   (clipetty-mode))
 
+(use-package s
+  :ensure t)
+
+(use-package dash
+  :ensure t)
+
+(use-package editorconfig
+  :ensure t)
+
+;; Copilot configurations
+(use-package copilot
+  :load-path (lambda () (expand-file-name "copilot.el" user-emacs-directory))
+  :diminish
+  :bind
+  (("C-<return>" . 'copilot-accept-completion))
+  :config
+  (global-copilot-mode)
+  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
+  (add-to-list 'copilot-indentation-alist '(cc-mode 4))
+  (add-to-list 'copilot-indentation-alist '(org-mode 4))
+  (add-to-list 'copilot-indentation-alist '(text-mode 4))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 4))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 4))
+  (add-hook 'prog-mode-hook 'copilot-mode))
+
 
 (use-package avy
   :ensure t
@@ -110,8 +100,7 @@
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
-
+  :init (setq markdown-command "pandoc"))
 (use-package which-key
   :ensure t
   :init
@@ -136,18 +125,23 @@
 	completion-category-overrides '((file (styles partial-completion)))))
   
 (use-package cc-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   :ensure t)
 
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-disable-insert-state-bindings t)
-  :config
-  (evil-set-initial-state 'help-mode 'emacs)
-  (evil-set-initial-state 'compilation-mode 'emacs)
-  (evil-set-initial-state 'dired-mode 'emacs)
-  (evil-set-initial-state 'magit-mode 'emacs)
-  (evil-mode))
+;(use-package evil
+;  :ensure t
+;  :init
+;  (setq evil-disable-insert-state-bindings t)
+;  :config
+;  (evil-set-initial-state 'help-mode 'emacs)
+;  (evil-set-initial-state 'compilation-mode 'emacs)
+;  (evil-set-initial-state 'dired-mode 'emacs)
+;  (evil-set-initial-state 'magit-mode 'emacs)
+;  (evil-set-initial-state 'gdb-parent-mode 'emacs)
+;  (evil-set-initial-state 'comint-mode 'emacs)
+; (evil-mode))
+                                        ;
 
 (defun bc-next-buffer ()
   (interactive)
@@ -254,7 +248,6 @@
 ;; 	 (c-mode . eglot)
 ;; 	 (python-mode . eglot)))
 
-
 ;;(add-hook 'c-mode-hook 'eglot)
 ;;(add-hook 'c++-mode-hook 'eglot)
 ;;(add-hook 'python-mode-hook 'eglot)
@@ -281,26 +274,38 @@
  ;; If there is more than one, they won't work right.
  '(avy-all-windows nil)
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
+ '(c-basic-offset 4)
  '(c-default-style "stroustrup")
  '(cursor-type t)
  '(custom-enabled-themes '(modus-operandi))
  '(dired-dwim-target 'dired-dwim-target-next)
- '(display-line-numbers t)
+ '(display-line-numbers 'relative)
  '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
  '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
- '(org-agenda-files '("~/private/todo.org"))
+ '(mode-require-final-newline t)
+ '(org-agenda-files '("~/org/notes.org"))
+ '(org-agenda-start-with-log-mode 'only)
+ '(org-capture-templates
+   '(("n" "Notes Entry" entry
+      (file+headline "" "Notes")
+      "" :time-prompt t)
+     ("t" "Tasks Entry" checkitem
+      (file+headline "~/org/tasks.org" "Tasks")
+      "" :clock-in t :time-prompt t)))
+ '(org-default-notes-file "~/org/notes.org")
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
  '(python-indent-guess-indent-offset-verbose nil)
+ '(require-final-newline t)
  '(show-paren-style 'parenthesis)
  '(tab-width 4)
  '(tool-bar-mode nil)
@@ -325,3 +330,8 @@
 ;; Treat underscores as part of a word, not a word separator.
 ;; Lets evil * and other movement keys work as expected
 (modify-syntax-entry ?_ "w")
+
+(put 'upcase-region 'disabled nil)
+
+(use-package ansi-color
+    :hook (compilation-filter . ansi-color-compilation-filter))
