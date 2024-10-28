@@ -1,6 +1,6 @@
 ; This is only needed once, near the top of the file
 (eval-when-compile
-  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+;; Following line is not needed if use-package.el is in ~/.emacs.d
   ;; (add-to-list 'load-path "~/.config/emacs/lisp/")
   (require 'use-package))
 
@@ -129,19 +129,19 @@
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   :ensure t)
 
-;(use-package evil
-;  :ensure t
-;  :init
-;  (setq evil-disable-insert-state-bindings t)
-;  :config
-;  (evil-set-initial-state 'help-mode 'emacs)
-;  (evil-set-initial-state 'compilation-mode 'emacs)
-;  (evil-set-initial-state 'dired-mode 'emacs)
-;  (evil-set-initial-state 'magit-mode 'emacs)
-;  (evil-set-initial-state 'gdb-parent-mode 'emacs)
-;  (evil-set-initial-state 'comint-mode 'emacs)
-; (evil-mode))
-                                        ;
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-disable-insert-state-bindings t)
+  :config
+  (evil-set-initial-state 'term-mode 'emacs)
+  (evil-set-initial-state 'shell-mode 'emacs)
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'magit-mode 'emacs)
+  (evil-set-initial-state 'ibuffer-mode 'emacs)
+  (evil-set-initial-state 'compilation-mode 'emacs)
+  (evil-set-initial-state 'help-mode 'emacs)
+  (evil-mode 1))
 
 (defun bc-next-buffer ()
   (interactive)
