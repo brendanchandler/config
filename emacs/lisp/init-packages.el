@@ -12,6 +12,15 @@
 ;;; Code:
 (provide 'init-packages)
 
+(define-prefix-command 'filesystem-map)
+(define-key global-map (kbd "C-c C-f") filesystem-map)
+
+(define-prefix-command 'search-map)
+(define-key global-map (kbd "C-c C-j") search-map)
+
+(define-prefix-command 'o-map)
+(define-key global-map (kbd "C-o") o-map)
+
 (use-package emacs
   :ensure t
   :bind (("C-c f t" . (lambda () (interactive)

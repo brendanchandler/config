@@ -15,17 +15,6 @@
 (require 'init-packages)
 (require 'custom-functions)
 
-(define-prefix-command 'filesystem-map)
-(define-key global-map (kbd "C-c C-f") filesystem-map)
-
-(define-prefix-command 'search-map)
-(define-key global-map (kbd "C-c C-j") search-map)
-
-(define-prefix-command 'o-map)
-(define-key global-map (kbd "C-o") o-map)
-
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
