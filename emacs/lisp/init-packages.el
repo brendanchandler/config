@@ -10,7 +10,6 @@
 ;; This file is an init file fragment for loading and configuring Emacs plugins.
 ;;
 ;;; Code:
-(provide 'init-packages)
 
 (define-prefix-command 'filesystem-map)
 (define-key global-map (kbd "C-c C-f") filesystem-map)
@@ -83,16 +82,10 @@
 
 ;; OPTIONAL configuration
 
-(use-package gptel
-  :config
-  (setq gptel-model "gpto1"
-        gptel-backend
-        (gptel-make-openai "Argo"
-          :host "argo-bridge.cels.anl.gov"  ; your custom host
-          :endpoint "/chat/completions"   ; standard OpenAI endpoint
-          :stream t
-          :key ""                ; your API key
-          :models '("gpto1"))))
+ ;; Conditionally load gptel configuration from external file
+(let ((site-config-file "~/.config/emacs/lisp/site-config.el"))
+  (when (file-exists-p site-config-file)
+      (load site-config-file)))
 
 (use-package avy
   :ensure t
@@ -181,3 +174,10 @@
 ;;(add-hook 'c-mode-hook 'eglot)
 ;;(add-hook 'c++-mode-hook 'eglot)
 ;;(add-hook 'python-mode-hook 'eglot)
+
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . (lambda () (setq indent-tabs-mode nil))))
+
+(provide 'init-packages)
+

@@ -38,17 +38,17 @@
  '(org-agenda-files '("~/org/notes.org"))
  '(org-agenda-start-with-log-mode 'only)
  '(org-capture-templates
-   '(("n" "Notes Entry" entry
-      (file+headline "" "Notes")
-      "" :time-prompt t)
+   '(("n" "Notes Entry" entry (file+headline "" "Notes") "" :time-prompt
+      t)
      ("t" "Tasks Entry" checkitem
-      (file+headline "~/org/tasks.org" "Tasks")
-      "" :clock-in t :time-prompt t)))
+      (file+headline "~/org/tasks.org" "Tasks") "" :clock-in t
+      :time-prompt t)))
  '(org-default-notes-file "~/org/notes.org")
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(compat gptel clang-format editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(avy clang-format company evil flycheck gptel lsp-mode magit
+         orderless rust-mode vertico))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
