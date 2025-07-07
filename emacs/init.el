@@ -37,12 +37,11 @@
  '(org-agenda-files '("~/org/notes.org"))
  '(org-agenda-start-with-log-mode 'only)
  '(org-capture-templates
-   '(("n" "Notes Entry" entry
-      (file+headline "" "Notes")
-      "" :time-prompt t)
+   '(("n" "Notes Entry" entry (file+headline "" "Notes") "" :time-prompt
+      t)
      ("t" "Tasks Entry" checkitem
-      (file+headline "~/org/tasks.org" "Tasks")
-      "" :clock-in t :time-prompt t)))
+      (file+headline "~/org/tasks.org" "Tasks") "" :clock-in t
+      :time-prompt t)))
  '(org-default-notes-file "~/org/notes.org")
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))

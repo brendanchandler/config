@@ -10,7 +10,6 @@
 ;; This file is an init file fragment for loading and configuring Emacs plugins.
 ;;
 ;;; Code:
-(provide 'init-packages)
 
 (define-prefix-command 'filesystem-map)
 (define-key global-map (kbd "C-c C-f") filesystem-map)
@@ -88,17 +87,11 @@
 ;;   :ensure t)
 
 ;; OPTIONAL configuration
-(use-package gptel
-  :ensure t
-  :config
-  (setq gptel-model 'claudesonnet4
-        gptel-backend
-        (gptel-make-openai "Argo"
-          :host "argo-bridge.cels.anl.gov"  ; your custom host
-          :endpoint "/chat/completions"   ; standard OpenAI endpoint
-          :stream t
-          :key ""                          ; your API key
-          :models '("gpt35" "gpt35large" "gpt4" "gpt4large" "gpt4turbo" "gpt4o" "gpt4olatest" "gpto1preview" "gpto1mini" "gpto3mini" "gpto1" "gpto3" "gpto4mini" "gpt41" "gpt41mini" "gpt41nano" "gemini25pro" "gemini25flash" "claudeopus4" "claudesonnet4" "claudesonnet37" "claudesonnet35v2"))))
+
+ ;; Conditionally load gptel configuration from external file
+(let ((site-config-file "~/.config/emacs/lisp/site-config.el"))
+  (when (file-exists-p site-config-file)
+      (load site-config-file)))
 
 (use-package avy
   :ensure t
@@ -198,6 +191,17 @@
 ;;(add-hook 'c-mode-hook 'eglot)
 ;;(add-hook 'c++-mode-hook 'eglot)
 ;;(add-hook 'python-mode-hook 'eglot)
+<<<<<<< HEAD
 
 (use-package rust-mode
   :ensure t)
+||||||| b320df5
+=======
+
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . (lambda () (setq indent-tabs-mode nil))))
+
+(provide 'init-packages)
+
+>>>>>>> 31d2b3f70e01ce8d1cfa784634da4625dc9fbfbe
