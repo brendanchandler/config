@@ -28,7 +28,6 @@
  '(custom-enabled-themes '(modus-operandi))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
- '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
  '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
  '(indent-tabs-mode nil)
@@ -48,7 +47,7 @@
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(compat gptel clang-format editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(rust-mode compat gptel clang-format editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)

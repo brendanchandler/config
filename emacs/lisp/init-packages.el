@@ -52,11 +52,17 @@
   (context-menu-mode)
   (windmove-default-keybindings)
   (global-unset-key (kbd "C-z"))
-  
-  (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+
   (defun my-goto-match-beginning ()
     (when (and isearch-forward isearch-other-end)
       (goto-char isearch-other-end)))
+  (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+
+  ;; Don't indent opening brace in inline functions
+  (defun my-c++-mode-hook ()
+    (c-set-offset 'inline-open 0))
+
+  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
 
 (use-package clang-format
@@ -82,17 +88,17 @@
 ;;   :ensure t)
 
 ;; OPTIONAL configuration
-
 (use-package gptel
+  :ensure t
   :config
-  (setq gptel-model "gpto1"
+  (setq gptel-model 'claudesonnet4
         gptel-backend
         (gptel-make-openai "Argo"
           :host "argo-bridge.cels.anl.gov"  ; your custom host
           :endpoint "/chat/completions"   ; standard OpenAI endpoint
           :stream t
-          :key ""                ; your API key
-          :models '("gpto1"))))
+          :key ""                          ; your API key
+          :models '("gpt35" "gpt35large" "gpt4" "gpt4large" "gpt4turbo" "gpt4o" "gpt4olatest" "gpto1preview" "gpto1mini" "gpto3mini" "gpto1" "gpto3" "gpto4mini" "gpt41" "gpt41mini" "gpt41nano" "gemini25pro" "gemini25flash" "claudeopus4" "claudesonnet4" "claudesonnet37" "claudesonnet35v2"))))
 
 (use-package avy
   :ensure t
@@ -138,7 +144,8 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-disable-insert-state-bindings t)
+  (setq evil-disable-insert-state-bindings nil)
+  (setq evil-default-state 'emacs)
   :config
   (evil-set-initial-state 'term-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
@@ -147,7 +154,17 @@
   (evil-set-initial-state 'ibuffer-mode 'emacs)
   (evil-set-initial-state 'compilation-mode 'emacs)
   (evil-set-initial-state 'help-mode 'emacs)
-  (evil-mode 1))
+  (evil-set-initial-state 'magit-status-mode 'emacs)
+  (evil-set-initial-state 'magit-diff-mode 'emacs)
+  (evil-set-initial-state 'magit-log-mode 'emacs)
+  (evil-set-initial-state 'org-mode 'emacs)
+  (evil-set-initial-state 'info-mode 'emacs)
+  (evil-set-initial-state 'eshell-mode 'emacs)
+  (evil-mode 1)
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (evil-local-mode 1)
+              (evil-normal-state))))
 
 (use-package lsp-mode
   :ensure t
@@ -181,3 +198,6 @@
 ;;(add-hook 'c-mode-hook 'eglot)
 ;;(add-hook 'c++-mode-hook 'eglot)
 ;;(add-hook 'python-mode-hook 'eglot)
+
+(use-package rust-mode
+  :ensure t)
