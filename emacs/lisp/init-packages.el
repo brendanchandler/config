@@ -191,17 +191,9 @@
 ;;(add-hook 'c-mode-hook 'eglot)
 ;;(add-hook 'c++-mode-hook 'eglot)
 ;;(add-hook 'python-mode-hook 'eglot)
-<<<<<<< HEAD
-
-(use-package rust-mode
-  :ensure t)
-||||||| b320df5
-=======
 
 (use-package rust-mode
   :ensure t
   :hook (rust-mode . (lambda () (setq indent-tabs-mode nil))))
 
 (provide 'init-packages)
-
->>>>>>> 31d2b3f70e01ce8d1cfa784634da4625dc9fbfbe
