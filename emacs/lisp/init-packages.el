@@ -88,7 +88,7 @@
 
 ;; OPTIONAL configuration
 
- ;; Conditionally load gptel configuration from external file
+ ;; Conditionally load site specific configuration from external file
 (let ((site-config-file "~/.config/emacs/lisp/site-config.el"))
   (when (file-exists-p site-config-file)
       (load site-config-file)))

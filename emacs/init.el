@@ -25,7 +25,7 @@
  '(c-basic-offset 4)
  '(c-default-style "stroustrup")
  '(cursor-type t)
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes '(tango ##))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
  '(gmm-tool-bar-style 'gnome t)
@@ -46,7 +46,10 @@
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "INTR(i)" "PROG(p)" "DONE(d)")))
  '(package-selected-packages
-   '(rust-mode compat gptel clang-format editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(avy clang-format clipetty clipetty--dcs-end company compat
+         editorconfig evil flycheck gptel lsp-treemacs lsp-ui magit
+         markdown-mode orderless rust-mode use-package vertico
+         which-key))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
