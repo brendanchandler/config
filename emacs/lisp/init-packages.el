@@ -20,6 +20,19 @@
 (define-prefix-command 'o-map)
 (define-key global-map (kbd "C-o") o-map)
 
+(define-minor-mode bren-mode
+  "Minor mode for window movement keybindings."
+  :lighter " Bren"
+  :init-value t
+  :keymap (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "M-h") 'windmove-left)
+            (define-key map (kbd "M-l") 'windmove-right)
+            (define-key map (kbd "M-j") 'windmove-down)
+            (define-key map (kbd "M-k") 'windmove-up)
+            map))
+
+(bren-mode 1)
+
 (use-package emacs
   :ensure t
   :bind (("C-c f t" . (lambda () (interactive)
@@ -34,10 +47,6 @@
 			  (load-file user-init-file)))
 	 ("C-o e" . hippie-expand)
 	 ("M-i" . imenu)
-	 ("M-h" . windmove-left)
-	 ("M-l" . windmove-right)
-	 ("M-j" . windmove-down)
-	 ("M-k" . windmove-up)
 	 ("C-x C-o" . tab-next)
 	 ("C-c m" . (lambda () (interactive)
 		      (occur "Section:")))

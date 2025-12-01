@@ -30,7 +30,7 @@
  '(cursor-type t)
  '(custom-enabled-themes '(modus-operandi))
  '(dired-dwim-target 'dired-dwim-target-next)
- '(display-line-numbers 'relative)
+ '(display-line-numbers t)
  '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
  '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
@@ -42,18 +42,19 @@
  '(org-agenda-log-mode-items '(closed clock state))
  '(org-agenda-start-with-log-mode 'only)
  '(org-capture-templates
-   '(("n" "Note" entry
-      (file "~/org/notes.org")
-      "* %?\12%i\12%a" :time-prompt t)
-     ("t" "Task" entry
-      (file "~/org/tasks.org")
-      "* TODO %?\12%i\12%a" :empty-lines 1 :clock-in t :time-prompt t)))
+   '(("n" "Note" entry (file "~/org/notes.org") "* %?\12%i\12%a"
+      :time-prompt t)
+     ("t" "Task" entry (file "~/org/tasks.org") "* TODO %?\12%i\12%a"
+      :empty-lines 1 :clock-in t :time-prompt t)))
  '(org-default-notes-file "~/org/notes.org")
  '(org-goto-auto-isearch nil)
  '(org-todo-keywords
-   '((sequence "TODO(t)" "DOING(o)" "DELEGATED(l)" "VERIFY(v)" "|" "CANCELLED(c)" "DONE(d)")))
+   '((sequence "TODO(t)" "DOING(o)" "DELEGATED(l)" "VERIFY(v)" "|"
+               "CANCELLED(c)" "DONE(d)")))
  '(package-selected-packages
-   '(editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company lsp-treemacs flycheck which-key vertico use-package orderless markdown-mode magit avy))
+   '(editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company
+                  lsp-treemacs flycheck which-key vertico use-package
+                  orderless markdown-mode magit avy))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
