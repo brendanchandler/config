@@ -50,11 +50,17 @@
   :config
   (context-menu-mode)
   (global-unset-key (kbd "C-z"))
-  
-  (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+
   (defun my-goto-match-beginning ()
     (when (and isearch-forward isearch-other-end)
       (goto-char isearch-other-end)))
+  (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+
+  ;; Don't indent opening brace in inline functions
+  (defun my-c++-mode-hook ()
+    (c-set-offset 'inline-open 0))
+
+  (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
 
 (use-package clang-format
@@ -81,7 +87,7 @@
 
 ;; OPTIONAL configuration
 
- ;; Conditionally load gptel configuration from external file
+ ;; Conditionally load site specific configuration from external file
 (let ((site-config-file "~/.config/emacs/lisp/site-config.el"))
   (when (file-exists-p site-config-file)
       (load site-config-file)))
@@ -130,7 +136,8 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-disable-insert-state-bindings t)
+  (setq evil-disable-insert-state-bindings nil)
+  (setq evil-default-state 'emacs)
   :config
   (evil-set-initial-state 'term-mode 'emacs)
   (evil-set-initial-state 'shell-mode 'emacs)
@@ -139,7 +146,17 @@
   (evil-set-initial-state 'ibuffer-mode 'emacs)
   (evil-set-initial-state 'compilation-mode 'emacs)
   (evil-set-initial-state 'help-mode 'emacs)
-  (evil-mode 1))
+  (evil-set-initial-state 'magit-status-mode 'emacs)
+  (evil-set-initial-state 'magit-diff-mode 'emacs)
+  (evil-set-initial-state 'magit-log-mode 'emacs)
+  (evil-set-initial-state 'org-mode 'emacs)
+  (evil-set-initial-state 'info-mode 'emacs)
+  (evil-set-initial-state 'eshell-mode 'emacs)
+  (evil-mode 1)
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (evil-local-mode 1)
+              (evil-normal-state))))
 
 (use-package lsp-mode
   :ensure t
@@ -181,4 +198,3 @@
   (setq rust-format-on-save t))
 
 (provide 'init-packages)
-

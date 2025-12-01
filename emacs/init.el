@@ -25,10 +25,9 @@
  '(c-basic-offset 4)
  '(c-default-style "stroustrup")
  '(cursor-type t)
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes '(tango ##))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
- '(evil-default-state 'insert)
  '(gmm-tool-bar-style 'gnome t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
@@ -50,8 +49,10 @@
    '((sequence "TODO(t)" "DOING(o!)" "VERIFY(v!)" "DELEGATED(l@)" "|"
                "DROPPED(r@)" "DONE(d!)")))
  '(package-selected-packages
-   '(avy clang-format company evil flycheck gnuplot gptel lsp-mode magit
-         orderless rust-mode vertico))
+   '(avy clang-format clipetty clipetty--dcs-end company compat
+         editorconfig evil flycheck gptel lsp-treemacs lsp-ui magit
+         markdown-mode orderless rust-mode use-package vertico
+         which-key))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
