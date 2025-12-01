@@ -16,3 +16,4 @@ projectile-bookmarks.eld
 *.el#
 /.cache/
 /.gdb_history
+/site-config.el
