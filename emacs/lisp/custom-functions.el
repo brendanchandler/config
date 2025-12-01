@@ -17,6 +17,13 @@
 (provide 'custom-functions)
 
 
+(setq org-agenda-custom-commands
+      '(("u" "Unscheduled TODOs"
+         todo "TODO"
+         ((org-agenda-todo-ignore-scheduled 'all)
+          (org-agenda-tags-todo-honor-ignore-options t)))
+        ("n" "Agenda and all TODOs"
+         ((agenda #1="") (alltodo #1#)))))
 
 (defun bc-next-buffer ()
   (interactive)
