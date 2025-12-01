@@ -49,7 +49,6 @@
 	 )
   :config
   (context-menu-mode)
-  (windmove-default-keybindings)
   (global-unset-key (kbd "C-z"))
   
   (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
@@ -177,7 +176,9 @@
 
 (use-package rust-mode
   :ensure t
-  :hook (rust-mode . (lambda () (setq indent-tabs-mode nil))))
+  :hook (rust-mode . (lambda () (setq indent-tabs-mode nil)))
+  :config
+  (setq rust-format-on-save t))
 
 (provide 'init-packages)
 
