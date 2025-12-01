@@ -4,7 +4,14 @@
   ;; (add-to-list 'load-path "~/.config/emacs/lisp/")
   (require 'use-package))
 
+;; Set up the environment
+(setenv "PATH" (concat
+                (getenv "HOME") "/.local/bin:"
+                (getenv "HOME") ".config/emacs/bin:"
+                (getenv "PATH")))
+;;(setenv "MY_VAR" "my_value")
 
+;; Define Keymaps
 (define-prefix-command 'filesystem-map)
 (define-key global-map (kbd "C-c C-f") filesystem-map)
 
@@ -14,6 +21,7 @@
 (define-prefix-command 'o-map)
 (define-key global-map (kbd "C-o") o-map)
 
+;; Packages and their configuration
 (use-package emacs
   :ensure t
   :bind (("C-c f t" . (lambda () (interactive)
