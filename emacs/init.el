@@ -48,9 +48,10 @@
       :empty-lines 1 :clock-in t :time-prompt t)))
  '(org-default-notes-file "~/org/notes.org")
  '(org-goto-auto-isearch nil)
+ '(org-refile-targets '((org-agenda-files :level . 1)))
  '(org-stuck-projects '("+LEVEL=2/-DONE" ("NEXT") nil ""))
  '(org-todo-keyword-faces
-   '(("DOING" . "orange") ("DELEGATED" . "purple") ("VERIFY" . "blue")))
+   '(("NEXT" . "orange") ("DELEGATED" . "purple") ("VERIFY" . "blue")))
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "VERIFY(v)" "|"
                "CANCELLED(c)" "DONE(d)")))
