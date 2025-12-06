@@ -49,6 +49,8 @@
  '(org-default-notes-file "~/org/notes.org")
  '(org-goto-auto-isearch nil)
  '(org-stuck-projects '("+LEVEL=2/-DONE" ("NEXT") nil ""))
+ '(org-todo-keyword-faces
+   '(("DOING" . "orange") ("DELEGATED" . "purple") ("VERIFY" . "blue")))
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "VERIFY(v)" "|"
                "CANCELLED(c)" "DONE(d)")))
