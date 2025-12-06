@@ -38,7 +38,7 @@
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
  '(mode-require-final-newline t)
- '(org-agenda-files '("~/org/tasks.org"))
+ '(org-agenda-files '("~/org/"))
  '(org-agenda-log-mode-items '(closed clock state))
  '(org-agenda-start-with-log-mode 'only)
  '(org-capture-templates
@@ -48,8 +48,9 @@
       :empty-lines 1 :clock-in t :time-prompt t)))
  '(org-default-notes-file "~/org/notes.org")
  '(org-goto-auto-isearch nil)
+ '(org-stuck-projects '("+LEVEL=2/-DONE" ("NEXT") nil ""))
  '(org-todo-keywords
-   '((sequence "TODO(t)" "DOING(o)" "DELEGATED(l)" "VERIFY(v)" "|"
+   '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "VERIFY(v)" "|"
                "CANCELLED(c)" "DONE(d)")))
  '(package-selected-packages
    '(editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company
@@ -69,4 +70,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 90 :width normal)))))
+ '(default ((t (:family "Adwaita Mono" :foundry "UKWN" :slant normal :weight regular :height 120 :width normal)))))
