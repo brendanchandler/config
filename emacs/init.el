@@ -41,6 +41,9 @@
  '(org-agenda-files '("~/org/"))
  '(org-agenda-log-mode-items '(closed clock state))
  '(org-agenda-start-with-log-mode 'only)
+ '(org-babel-load-languages
+   '((emacs-lisp . t) (C . t) (sqlite . t) (shell . t) (eshell . t)
+     (makefile . t) (python . t) (gnuplot . t)))
  '(org-capture-templates
    '(("n" "Note" entry (file "~/org/notes.org") "* %?\12%i\12%a"
       :time-prompt t)
@@ -49,7 +52,10 @@
  '(org-default-notes-file "~/org/notes.org")
  '(org-goto-auto-isearch nil)
  '(org-refile-targets '((org-agenda-files :level . 1)))
- '(org-stuck-projects '("+LEVEL=2/-DONE" ("NEXT") nil ""))
+ '(org-startup-folded 'content)
+ '(org-startup-indented t)
+ '(org-startup-numerated t)
+ '(org-stuck-projects '("+LEVEL=1/-DONE-CANCELLED" ("NEXT") nil ""))
  '(org-todo-keyword-faces
    '(("NEXT" . "orange") ("DELEGATED" . "purple") ("VERIFY" . "blue")))
  '(org-todo-keywords
@@ -73,4 +79,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Adwaita Mono" :foundry "UKWN" :slant normal :weight regular :height 120 :width normal)))))
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight regular :height 98 :width normal)))))
