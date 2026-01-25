@@ -61,10 +61,7 @@
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "VERIFY(v)" "|"
                "CANCELLED(c)" "DONE(d)")))
- '(package-selected-packages
-   '(editorconfig god-mode evil lsp-ui clipetty--dcs-end clipetty company
-                  lsp-treemacs flycheck which-key vertico use-package
-                  orderless markdown-mode magit avy))
+ '(package-selected-packages nil)
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
