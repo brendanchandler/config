@@ -72,6 +72,16 @@
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
 
+(use-package tramp
+  :config
+  (setq tramp-connection-reuse nil)
+  (customize-set-variable
+   'tramp-ssh-controlmaster-options
+   (concat
+    "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
+    "-o ControlMaster=auto -o ControlPersist=yes")))
+
+
 (use-package clang-format
   :ensure t
   :config
