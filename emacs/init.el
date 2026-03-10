@@ -17,5 +17,5 @@
 (require 'init-packages)
 (require 'custom-functions)
 
-(setq customize-file (expand-file-name "customize.el" (file-name-directory load-file-name)))
-(load customize-file) 
+(setq custom-file (expand-file-name "custom.el" (file-name-directory load-file-name)))
+(load custom-file) 

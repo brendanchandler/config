@@ -1,4 +1,3 @@
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -8,8 +7,17 @@
  '(backup-directory-alist '((".*" . "~/emacs-backup")))
  '(c-basic-offset 4)
  '(c-default-style "stroustrup")
+ '(calendar-intermonth-header "Wk")
+ '(calendar-intermonth-text
+   '(propertize
+     (format "%2d"
+             (car
+              (calendar-iso-from-absolute
+               (calendar-absolute-from-gregorian (list month day year)))))
+     'font-lock-face 'font-lock-function-name-face))
+ '(calendar-week-start-day 1)
  '(cursor-type t)
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes '(modus-vivendi))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
  '(evil-default-state 'insert)
@@ -19,29 +27,6 @@
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
  '(mode-require-final-newline t)
- '(org-agenda-files '("~/org/"))
- '(org-agenda-log-mode-items '(closed clock state))
- '(org-agenda-start-with-log-mode 'only)
- '(org-babel-load-languages
-   '((emacs-lisp . t) (C . t) (sqlite . t) (shell . t) (eshell . t)
-     (makefile . t) (python . t) (gnuplot . t)))
- '(org-capture-templates
-   '(("n" "Note" entry (file "~/org/notes.org") "* %?\12%i\12%a"
-      :time-prompt t)
-     ("t" "Task" entry (file "~/org/tasks.org") "* TODO %?\12%i\12%a"
-      :empty-lines 1 :clock-in t :time-prompt t)))
- '(org-default-notes-file "~/org/notes.org")
- '(org-goto-auto-isearch nil)
- '(org-refile-targets '((org-agenda-files :level . 1)))
- '(org-startup-folded 'content)
- '(org-startup-indented t)
- '(org-startup-numerated t)
- '(org-stuck-projects '("+LEVEL=1/-DONE-CANCELLED" ("NEXT") nil ""))
- '(org-todo-keyword-faces
-   '(("NEXT" . "orange") ("DELEGATED" . "purple") ("VERIFY" . "blue")))
- '(org-todo-keywords
-   '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "VERIFY(v)" "|"
-               "CANCELLED(c)" "DONE(d)")))
  '(package-selected-packages nil)
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
@@ -58,3 +43,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight regular :height 98 :width normal)))))
+

@@ -33,8 +33,11 @@
 
 (bren-mode 1)
 
+;; Common Keybinding Prefixes:
+;; C-c f :: file related operations
+;; C-c s :: searching
 (use-package emacs
-  :ensure t
+  :ensure nil
   :bind (("C-c f t" . (lambda () (interactive)
 			(find-file "/ssh:bchandler@tesseract:/home/phoebus/BCHANDLER/")))
 	 ("C-c f w" . (lambda () (interactive)
@@ -47,14 +50,13 @@
 			  (load-file user-init-file)))
 	 ("C-o e" . hippie-expand)
 	 ("M-i" . imenu)
+     ("C-j" . duplicate-dwim)
 	 ("C-x C-o" . tab-next)
-	 ("C-c m" . (lambda () (interactive)
-		      (occur "Section:")))
 	 ("M-e" . forward-to-word)
 	 ("C-x C-b" . ibuffer)
+     ("C-c f r" . recentf)
 	 ("M-n" . move-line-down)
 	 ("M-p" . move-line-up)
-	 ("C-c w" . bc/vertical-windows)
 	 )
   :config
   (context-menu-mode)
