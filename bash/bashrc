@@ -9,6 +9,9 @@ HISTCONTROL=ignorespace:ignoredups
 # append to the history file, don't overwrite it
 shopt -s histappend
 shopt -u interactive_comments
+shopt -s cdspell
+
+alias ls='ls --color=auto'
 
 # BLACK="\[\033[0;30m\]"
 # BLACKBOLD="\[\033[1;30m\]"
@@ -62,6 +65,17 @@ PATH=$HOME/.local/bin:$PATH
 export PATH
 
 export GOPATH=~/src/go
+
+export PATH="$HOME/bin/${PATH:+:$PATH}"
+export PATH="$HOME/.local/bin${PATH:+:$PATH}"
+export PATH="$HOME/opt/node/bin${PATH:+:$PATH}"
+export COLORTERM=truecolor
+
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:+$PKG_CONFIG_PATH:}$HOME/lib/pkgconfig/:$HOME/lib64/pkgconfig
+export LIBRARY_PATH=${LIBRARY_PATH:+$LIBRARY_PATH:}$HOME/lib/:$HOME/lib64/
+export CPATH=${CPATH:+$CPATH:}$HOME/include/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$HOME/lib/:$HOME/lib64/
+
 
 keychain $HOME/.ssh/id_rsa
 source $HOME/.keychain/$HOSTNAME-sh
