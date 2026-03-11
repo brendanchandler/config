@@ -82,12 +82,18 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$HOME/lib/:$HOME/lib
 if command -v keychain &> /dev/null; then
     keychain $HOME/.ssh/id_rsa
     source $HOME/.keychain/$HOSTNAME-sh
+else
+    echo "disabling keychain/ssh-agent shell integration."
 fi
 
 if command -v fzf &> /dev/null; then
     eval "$(fzf --bash)"
+else
+    echo "skipping fzf shell integration."
 fi
 
-if command -v z &> /dev/null; then
-   eval "$(zoxide init bash)"
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init bash)"
+else
+    echo "skipping zoxide shell integration."
 fi
