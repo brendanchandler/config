@@ -57,11 +57,12 @@ export GIT_EDITOR="emacs -nw"
 
 alias e='emacsclient -n'
 
-export s=~/src/
-
 PATH=$HOME/bin/:$PATH
 PATH=$HOME/.local/bin:$PATH
 export PATH
 
 export GOPATH=~/src/go
+
+keychain $HOME/.ssh/id_rsa
+source $HOME/.keychain/$HOSTNAME-sh
 
