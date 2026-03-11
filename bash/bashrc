@@ -12,6 +12,8 @@ shopt -u interactive_comments
 shopt -s cdspell
 
 alias ls='ls --color=auto'
+alias yclip='xclip -selection clipboard -rmlastnl'
+alias pwdclip='pwd | xclip -selection clipboard -rmlastnl'
 
 # BLACK="\[\033[0;30m\]"
 # BLACKBOLD="\[\033[1;30m\]"
