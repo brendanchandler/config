@@ -80,3 +80,5 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$HOME/lib/:$HOME/lib
 keychain $HOME/.ssh/id_rsa
 source $HOME/.keychain/$HOSTNAME-sh
 
+eval "$(fzf --bash)"
+
