@@ -147,6 +147,8 @@ bindsym Shift+F9 move container to workspace number $ws9
 bindsym Shift+F10 move container to workspace number $ws10
 
 # reload the configuration file
+bindsym F11 exec ksnip
+for_window [class="ksnip"] floating enable
 bindsym F12 reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
