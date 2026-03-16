@@ -79,11 +79,6 @@ export LIBRARY_PATH=${LIBRARY_PATH:+$LIBRARY_PATH:}$HOME/lib/:$HOME/lib64/
 export CPATH=${CPATH:+$CPATH:}$HOME/include/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$HOME/lib/:$HOME/lib64/
 
-if command -v keychain &> /dev/null; then
-    keychain $HOME/.ssh/id_rsa
-    source $HOME/.keychain/$HOSTNAME-sh
-fi
-
 if command -v fzf &> /dev/null; then
     eval "$(fzf --bash)"
 fi
