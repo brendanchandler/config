@@ -58,6 +58,7 @@
      ("C-c f r" . recentf)
 	 ("M-n" . move-line-down)
 	 ("M-p" . move-line-up)
+     ("C-c t" . insert-timestamp)
 	 )
   :custom
   (column-number-mode t)
@@ -104,6 +105,8 @@
 
   (add-hook 'c++-mode-hook 'my-c++-mode-hook)
   )
+
+
   ;; We want auto-save, but no #file# cluterring, so everything goes under our config cache/
   (make-directory (expand-file-name "cache/auto-saves/" user-emacs-directory) t)
   (setq auto-save-list-file-prefix (expand-file-name "cache/auto-saves/sessions/" user-emacs-directory)

@@ -137,6 +137,9 @@
 ;; Lets evil * and other movement keys work as expected
 (modify-syntax-entry ?_ "w")
 
-
+(defun insert-timestamp ()
+  "Insert a timestamp at point, like 2025.02.16 10:35."
+  (interactive)
+  (insert (format-time-string "%Y.%m.%d %H:%M")))
 
 ;;; custom-functions.el ends here
