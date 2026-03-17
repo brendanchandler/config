@@ -27,7 +27,9 @@
  '(inhibit-startup-screen t)
  '(line-move-visual nil)
  '(mode-require-final-newline t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(avy clang-format cmake-mode company flycheck lsp-mode magit
+         orderless rust-mode vertico))
  '(python-fill-docstring-style 'pep-257)
  '(python-indent-def-block-scale 4)
  '(python-indent-guess-indent-offset nil)
