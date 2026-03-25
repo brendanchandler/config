@@ -139,4 +139,12 @@
 
 
 
+(defun bc/markdown-insert-file-link ()
+  "Insert a markdown link to a local file with file-name completion."
+  (interactive)
+  (let* ((file (read-file-name "Link to file: "))
+         (rel (file-relative-name file))
+         (desc (read-string "Description: " (file-name-nondirectory file))))
+    (insert (format "[%s](%s)" desc rel))))
+
 ;;; custom-functions.el ends here

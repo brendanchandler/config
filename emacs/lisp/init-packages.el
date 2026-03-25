@@ -160,7 +160,9 @@
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "pandoc"))
+  :init (setq markdown-command "pandoc")
+  :bind (:map markdown-mode-map
+              ("C-c C-L" . bc/markdown-insert-file-link)))
 (use-package which-key
   :ensure t
   :init
