@@ -137,7 +137,10 @@
 ;; Lets evil * and other movement keys work as expected
 (modify-syntax-entry ?_ "w")
 
-
+(defun insert-timestamp ()
+  "Insert a timestamp at point, like 2025.02.16 10:35."
+  (interactive)
+  (insert (format-time-string "%Y.%m.%d %H:%M")))
 
 (defun bc/markdown-insert-file-link ()
   "Insert a markdown link to a local file with file-name completion."
