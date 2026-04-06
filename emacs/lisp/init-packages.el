@@ -59,6 +59,10 @@
 	 ("M-n" . move-line-down)
 	 ("M-p" . move-line-up)
      ("C-c t" . insert-timestamp)
+     ("C-," . hs-hide-block)
+     ("C-." . hs-show-block)
+     ("C-<" . hs-hide-all)
+     ("C->" . hs-show-all)
 	 )
   :custom
   (column-number-mode t)
@@ -98,7 +102,8 @@
     (when (and isearch-forward isearch-other-end)
       (goto-char isearch-other-end)))
   (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
-
+  (add-hook 'prog-mode 'hs-minor-mode)
+  
   ;; Don't indent opening brace in inline functions
   (defun my-c++-mode-hook ()
     (c-set-offset 'inline-open 0))
