@@ -62,7 +62,7 @@
      ("C-," . hs-hide-block)
      ("C-." . hs-show-block)
      ("C-<" . hs-hide-all)
-     ("C->" . hs-show-all)
+     ("C->" . hs-show-all) 
 	 )
   :custom
   (column-number-mode t)

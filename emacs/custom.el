@@ -17,7 +17,7 @@
      'font-lock-face 'font-lock-function-name-face))
  '(calendar-week-start-day 1)
  '(cursor-type t)
- '(custom-enabled-themes '(modus-vivendi))
+ '(custom-enabled-themes '(modus-vivendi-tinted))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
  '(evil-default-state 'insert)
