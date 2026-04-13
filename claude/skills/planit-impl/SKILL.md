@@ -9,30 +9,22 @@ user-invocable: true
 
 # Implement Plan
 
-Implement all tasks from a plan file.
-
-## Arguments
-
-The skill accepts an optional argument specifying the plan file to implement:
-- If an argument is provided (e.g., `docs/authentication.md`), implement tasks from that file
-- If no argument is provided, default to `plan.md` in the project root
+Implement all tasks from the plan.md file.
 
 ## Implementation Process
-
-1. **Read Plan**: Load the specified plan file (or plan.md if not specified) and understand all tasks
-2. **Implement Each Task**:
+1. Load the plan.md and understand all tasks
+2. If not already created, add a TODO list to plan.md detailing every
+   step needed to implement the plan.
+2. Implement each task:
    - Create/edit required files
    - Write clean, production-ready code
    - Follow project conventions
    - No verbose comments - code should be self-documenting
    - Only add comments for non-obvious logic or clarifying examples
-
-3. **Mark Progress**: As you complete each task:
+3. Mark progress as you complete each task:
    - Update the plan file to mark tasks with [x] if using checklist format
    - Or add a COMPLETED timestamp to each task
-   - Don't add commentary - just mark as done
-
-4. **Test**: Run any tests to verify implementation works
+4. Run any tests to verify implementation works
 
 ## Code Quality
 
@@ -46,3 +38,4 @@ The skill accepts an optional argument specifying the plan file to implement:
 Do NOT commit changes to git - user will review and commit themselves.
 
 Complete ALL tasks in the plan before stopping. Do not stop until everything is implemented.
+

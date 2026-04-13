@@ -2,37 +2,20 @@
 name: planit-update
 description: Address notes in plan.md and update the document accordingly
 user-invocable: true
+argument-hint: "User Feedback on plan.md"
 ---
 
-# Update Plan
+## Instruction
+1. Read the plan.md file and review any "NOTE:" entries embedded in it.
+2. Refine Plan by updating plan.md based on user feedback and "NOTE:" sections.
+   a. Fix any errors or incorrect assumptions.
+   b. Add missing details.
+   c. Clarify ambiguous sections
+   d. Remove redundancy and text which is no longer relevant.
+4. Remove inline NOTE: entries as you address them.
+5. Keep it concise.
+6. Show code snippets in unified diff format when needed.
 
-Read a plan file and review any notes or feedback embedded in it.
-
-## Arguments
-
-The skill accepts an optional argument specifying the plan file to update:
-- If an argument is provided (e.g., `docs/new-feature.md`), update that file
-- If no argument is provided, default to `plan.md` in the project root
-
-## Update Process
-
-1. **Read Current Plan**: Load the specified plan file (or plan.md if not specified)
-2. **Identify Notes**: Look for "NOTE:" or inline feedback
-3. **Refine Plan**: Update based on feedback:
-   - Fix errors or incorrect assumptions
-   - Add missing critical details
-   - Clarify ambiguous sections
-   - Remove redundancy and verbosity
-
-4. **Mark Resolution**: Remove inline notes as you address them
-5. **Keep It Concise**:
-   - Remove unnecessary explanations
-   - Convert paragraphs to bullet points where possible
-   - Trim verbose sections
-   - Focus on actionable items
-
-Update the file in place and ensure the plan is ready for implementation.
-
-**Important:** Maintain brevity. Plans should be concise and scannable, not exhaustive documentation.
-
-Do not implement yet - only update the plan document.
+**Important:**
+- Maintain brevity. Plans should be concise and scannable, not exhaustive documentation.
+- Do not implement yet - only update the plan.md document.
