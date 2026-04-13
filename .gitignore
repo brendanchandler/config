@@ -18,3 +18,4 @@ projectile-bookmarks.eld
 /.gdb_history
 /site-config.el
 emacs/eln-cache/30.1-c0e26f08
+fish/fish_variables
