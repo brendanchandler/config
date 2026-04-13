@@ -21,7 +21,7 @@ XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 ! ============================================================
 
 XTerm.vt100.faceName:       DejaVu Sans Mono
-XTerm.vt100.faceSize:       13
+XTerm.vt100.faceSize:       11
 XTerm.vt100.renderFont:     true
 XTerm.vt100.antialias:      true
 
