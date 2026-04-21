@@ -1,7 +1,6 @@
 ---
 name: planit
 description: Create concise plan.md for new feature implementation details.
-argument-hint: "Feature Description"
 ---
 
 ## Instruction
@@ -13,3 +12,4 @@ argument-hint: "Feature Description"
 6. Ask clarifying questions in the plan document and the user will add "NOTE:" comments responding to them.
 7. When the plan involves generating or modifying code, include complete and thorough source code snippets (use unified diff format for modifications to existing files, plain code blocks for new code) to specify the intended implementation.
 
+Here is the user's feature description:  $ARGUMENTS

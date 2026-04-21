@@ -2,7 +2,6 @@
 name: planit-update
 description: Address notes in plan.md and update the document accordingly
 user-invocable: true
-argument-hint: "User Feedback on plan.md"
 ---
 
 ## Instruction
@@ -15,6 +14,7 @@ argument-hint: "User Feedback on plan.md"
 4. Remove inline NOTE: entries as you address them.
 5. Keep it concise.
 6. Show code snippets in unified diff format when needed.
+7. The following is additional feedback provided by the user: $ARGUMENTS.
 
 **Important:**
 - Maintain brevity. Plans should be concise and scannable, not exhaustive documentation.
