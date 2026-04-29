@@ -4,7 +4,7 @@ description: Create concise plan.md for new feature implementation details.
 ---
 
 ## Instruction
-1. Read the user's feature description carefully.
+1. Read the user's feature description in carefully.
 2. Write the plan to `plan.md` in the CURRENT WORKING DIRECTORY (not in source dirs).
 3. Do NOT implement any code -- only produce the plan document.
 4. Use markdown format with clear sections: Goal, Current State, Changes Needed, Files Affected, Testing Steps, Todo List.
