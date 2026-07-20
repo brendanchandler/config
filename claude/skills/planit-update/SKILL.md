@@ -5,7 +5,7 @@ user-invocable: true
 ---
 
 ## Instruction
-1. Read the plan.md file and review any "NOTE:" entries embedded in it.
+1. Read the @./plan.md file and review any "NOTE:" entries embedded in it.
 2. Refine Plan by updating plan.md based on user feedback and "NOTE:" sections.
    a. Fix any errors or incorrect assumptions.
    b. Add missing details.

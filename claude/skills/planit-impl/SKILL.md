@@ -1,6 +1,6 @@
 ---
 name: planit-impl
-description: Implement all tasks from plan.md, marking completed items, without unnecessary comments
+description: Implement all tasks from @./plan.md, marking completed items, without unnecessary comments
 disable-model-invocation: true
 context: fork
 agent: general-purpose
@@ -9,7 +9,7 @@ user-invocable: true
 
 # Implement Plan
 
-Implement all tasks from the plan.md file.
+Implement all tasks from the @./plan.md file.
 
 ## Implementation Process
 1. Load the plan.md and understand all tasks

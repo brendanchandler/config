@@ -136,10 +136,13 @@
   (global-set-key (kbd "C-c u") 'clang-format-buffer)
   (add-hook 'c-common-mode 'clang-format-buffer-on-save))
 
-;; (use-package clipetty--dcs-end
-;;   :ensure t
-;;   :config
-;;   (clipetty-mode))
+;; clipetty forwards the kill ring to the system clipboard via OSC 52,
+;; so M-w works from `emacs -nw` inside tmux (and over SSH). Terminal only;
+;; the GUI already syncs with the X clipboard.
+(use-package clipetty
+  :ensure t
+  :unless (display-graphic-p)
+  :hook (after-init . global-clipetty-mode))
 
 ;; (use-package s
 ;;   :ensure t)
@@ -200,30 +203,16 @@
   :hook (prog-mode . hs-minor-mode)
   :ensure t)
 
-;; (use-package evil
-;;   :ensure t
-;;   :init
-;;   (setq evil-disable-insert-state-bindings nil)
-;;   (setq evil-default-state 'emacs)
-;;   :config
-;;   (evil-set-initial-state 'term-mode 'emacs)
-;;   (evil-set-initial-state 'shell-mode 'emacs)
-;;   (evil-set-initial-state 'dired-mode 'emacs)
-;;   (evil-set-initial-state 'magit-mode 'emacs)
-;;   (evil-set-initial-state 'ibuffer-mode 'emacs)
-;;   (evil-set-initial-state 'compilation-mode 'emacs)
-;;   (evil-set-initial-state 'help-mode 'emacs)
-;;   (evil-set-initial-state 'magit-status-mode 'emacs)
-;;   (evil-set-initial-state 'magit-diff-mode 'emacs)
-;;   (evil-set-initial-state 'magit-log-mode 'emacs)
-;;   (evil-set-initial-state 'org-mode 'emacs)
-;;   (evil-set-initial-state 'info-mode 'emacs)
-;;   (evil-set-initial-state 'eshell-mode 'emacs)
-;;   (evil-mode 1)
-;;   (add-hook 'prog-mode-hook
-;;             (lambda ()
-;;               (evil-local-mode 1)
-;;               (evil-normal-state))))
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-default-state 'emacs)
+  :config
+  (evil-mode 1)
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (evil-local-mode 1)
+              (evil-normal-state))))
 
 (use-package lsp-mode
   :ensure t
