@@ -20,7 +20,7 @@
  '(custom-enabled-themes '(modus-vivendi-tinted))
  '(dired-dwim-target 'dired-dwim-target-next)
  '(display-line-numbers t)
- '(evil-default-state 'insert)
+ '(evil-default-state 'insert t)
  '(gmm-tool-bar-style 'gnome t)
  '(gud-pdb-command-name "/C2/conda/envs/aux/bin/python3 -m pdb")
  '(indent-tabs-mode nil)

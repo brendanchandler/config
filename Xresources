@@ -11,10 +11,24 @@ XTerm.vt100.metaSendsEscape: true
 XTerm.vt100.saveLines:      10000
 XTerm.vt100.scrollBar:      false
 XTerm.vt100.bellIsUrgent:   true
+Xterm.vt100.modifyOtherKeys: 1
+Xterm.vt100.metaSendsEscape: true
 
 ! Enable OSC 52 so tmux can write to the local clipboard over SSH
 XTerm.vt100.allowWindowOps: true
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
+
+! ============================================================
+! Clipboard — Ctrl+Shift+C / Ctrl+Shift+V (CLIPBOARD selection)
+! ============================================================
+
+! Route mouse selections to the CLIPBOARD buffer (not just PRIMARY)
+XTerm.vt100.selectToClipboard: true
+
+XTerm.vt100.translations: #override \
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Alt <KeyPress> Return: string(0x1b) string(0x0d)
 
 ! ============================================================
 ! Font — DejaVu Sans Mono (vector/Xft)
