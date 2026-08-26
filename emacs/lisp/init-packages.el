@@ -209,6 +209,8 @@
   (setq evil-default-state 'emacs)
   :config
   (evil-mode 1)
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'grep-mode 'emacs)
   (add-hook 'prog-mode-hook
             (lambda ()
               (evil-local-mode 1)
