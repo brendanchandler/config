@@ -1,0 +1,56 @@
+# Readline config. To use, add to ~/.inputrc:
+#   $include ~/src/config/bash/inputrc
+
+# Keep the system defaults as a base.
+$include /etc/inputrc
+
+# Default: TAB completes the common prefix and stops; you press TAB again to
+# see a list. With this: TAB inserts the first match and each further TAB
+# cycles to the next one.
+"\t": menu-complete
+
+# Without this, menu-complete jumps straight to the first full match, so a
+# shared prefix you could have safely committed to gets skipped. With it, the
+# first TAB inserts the common prefix and cycling starts on the second TAB.
+set menu-complete-display-prefix on
+
+# Default: first TAB beeps/does nothing on an ambiguous prefix, second TAB
+# lists the matches. With this: one TAB lists them immediately.
+# Largely inert now that TAB is menu-complete rather than complete; kept on
+# because it still governs any binding that does call complete.
+set show-all-if-ambiguous on
+
+# Default: completing a symlink-to-directory adds no trailing slash, so you
+# must type / yourself before continuing. With this: the slash is added.
+set mark-symlinked-directories on
+
+# Default: match lists are plain text. With this: entries are colorized by
+# file type, using LS_COLORS.
+set colored-stats on
+
+# Default: Up/Down walk the whole history. With this: they walk only entries
+# starting with what you've already typed. Ctrl-R still does full search.
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Shift-Tab cycles backwards through matches, mirroring TAB.
+"\e[Z": menu-complete-backward
+
+# With TAB cycling instead of listing, there's no longer a built-in way to see
+# all matches at once. This restores it on Ctrl-X then *.
+"\C-x*": possible-completions
+
+# --- Available but not enabled ---
+
+# Default: TAB completion is case-sensitive, so `cd /USR/<TAB>` does nothing.
+# With this: it completes to /usr/. Downside: filename completion no longer
+# distinguishes Makefile from makefile.
+# set completion-ignore-case on
+
+# Default: with >100 matches, readline asks "Display all 342 possibilities?".
+# Raise the threshold to skip the prompt for medium-sized lists.
+# set completion-query-items 200
+
+# Default: long match lists are paged through `more`, needing q to exit.
+# With this: they dump straight to the terminal.
+# set page-completions off

@@ -1,0 +1,27 @@
+#!/bin/bash
+# Command completion. Sourced from bashrc.
+
+case $- in
+    *i*) ;;
+    *) return ;;
+esac
+
+# The system loader defines _init_completion; if it's absent, profile.d never
+# ran (i.e. this is a non-login shell) and we load it ourselves.
+if ! declare -F _init_completion >/dev/null 2>&1; then
+    if [ -r /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    fi
+fi
+
+# Repo-tracked snippets first, then machine-local. An unmatched glob stays
+# literal and fails the -r test.
+for _f in "$BASH_CONFIG_DIR"/completions/* \
+          "$HOME"/.local/share/bash-completion/completions.d/*
+do
+    [ -r "$_f" ] && . "$_f"
+done
+unset _f
+
+# TAB on an empty prompt otherwise dumps every executable in $PATH.
+shopt -s no_empty_cmd_completion
